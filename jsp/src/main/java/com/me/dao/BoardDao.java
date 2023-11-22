@@ -100,7 +100,19 @@ public class BoardDao extends DBConnPool{
 
 	public List<BoardDto> getList(Criteria cri) {
 		List<BoardDto> list = new ArrayList<>();
+		
 		try {
+			String where = "";
+			if(!"".equals(cri.getSearchField())
+			    && !"".equals(cri.getSearchWord())) {
+				
+				 where = "where " + cri.getSearchField() 
+				+ " like '%" + cri.getSearchWord() + "%'";
+				
+			}
+			
+			System.out.println("where : "+where+"==============");
+			
 			String sql = "	select *\r\n"
 					+ "		from 	( \r\n"
 					+ "    			select rownum rnum, b.* \r\n"
@@ -108,6 +120,9 @@ public class BoardDao extends DBConnPool{
 					+ "        				select * \r\n"
 					+ "        				from board \r\n"
 					+ "        				-- 최신순으로 정렬\r\n"
+					
+					+ where
+					
 					+ "        				order by num desc\r\n"
 					+ "       				)b\r\n"
 					+ "       		)\r\n"
@@ -135,7 +150,7 @@ public class BoardDao extends DBConnPool{
 			}
 			System.out.println("=========" + list);
 			return list;	
-		} catch (SQLException e) {
+			}catch (SQLException e) {
 			System.out.println("SQLException 머시꺵머시꺵");
 			e.printStackTrace();
 		}
@@ -147,9 +162,21 @@ public class BoardDao extends DBConnPool{
 		
 		return list;	
 	}
-   public int getTotalCnt() {
+   public int getTotalCnt(Criteria cri) {
 	   int res = 0;
-	   String sql = "select count(*) from board";
+	 
+	   String where = "";
+		if(!"".equals(cri.getSearchField())
+		    && !"".equals(cri.getSearchWord())) {
+			
+			 where = "where " + cri.getSearchField() 
+			+ " like '%" + cri.getSearchWord() + "%'";
+			
+		}
+		
+		 String sql = "select count(*) from board" + where;
+		 System.out.println("sql : " + sql);
+		
 	   try {
 		pstmt = con.prepareStatement(sql);
 		

@@ -56,11 +56,12 @@ public class loginController extends HttpServlet {
 			//페이지 전환
 			BoardDao boardDao = new BoardDao();
 			Criteria cri = new Criteria();
-			PageDto pageDto = new PageDto(BoardDao.getTotalCnt(), cri);
+			PageDto pageDto = new PageDto(boardDao.getTotalCnt(cri), cri);
+		    request.setAttribute("pageDto", pageDto);
 			request.setAttribute("list", boardDao.getList(cri));
 			request.getRequestDispatcher("board.jsp").forward(request, response);
 			boardDao.close();
-			//response.sendRedirect("board.jsp");
+			response.sendRedirect("board.jsp");
 			
 		}else {
 			// login 실패

@@ -8,6 +8,15 @@
 <title>Insert title here</title>
 </head>
 <body>
+<form action="/boardList" name="searchForm">
+num :<input type="text" name="num"  value="${param.num }">
+pageNo : <input type="text" name="pageNo"  value="${param.pageNo}">
+searchWord : <input type="text" name="searchWord"  value="${param.searchWord}">
+searchField : <input type="text" name="searchField"  value="${param.searchField}">
+</form>
+
+
+
 <script type="text/javascript">
 window.onload = function() {
 	listBtn.onclick=function() {
@@ -21,7 +30,7 @@ window.onload = function() {
 		// 그래서 루트경로부터 풀 경로를 적어주는것이 오류가 발생하지 않도록 하는 방법.
 		
 		location.href=
-			'/06session/servletEx/deleteProcess.jsp?num=<%= request.getParameter("num")%>'; 
+			'/06session/servletEx/deleteProcess.jsp?num=${param.num}'; 
 	});
 }  
 

@@ -32,7 +32,7 @@
 
 <c:forEach items="${list}" var="dto">
   	<tr>
-        <td>${dto.num }</td>
+        
         <td>${dto.title }</td>
         <td>${dto.id}</td>
         <td>${dto.postdate }</td>

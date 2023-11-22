@@ -34,33 +34,26 @@ if(request.getAttribute("pageDto") !=null
   <ul class="pagination">
   <!-- 앞으로가기  버튼 시작 disabled : 비활. -->
     <li class="page-item <%=pageDto.isPrev() ? "" : "disabled"%>">
-      <a class="page-link" href="/boardList?pageNo=<%=pageDto.getStartNo()-1%>">Previous</a>
+      <a class="page-link" onclick="goPage<%=pageDto.getStartNo()-1%>">Previous</a>
     </li>
     
     
     <!-- 앞으로가기 버튼 끝 -->
-    
-    <% for(int i=pageDto.getStartNo(); i<=pageDto.getEndNo(); i++) {%>	
-    	<li class="page-item">
-    <a class="page-link <%= pageDto.getCri().getPageNo() == i ? "active" : "" %>" href="/boardList?pageNo=<%=i%>">
-    <%=i %></a>
-    </li>
-    <%} %>
-    
-    
-    <!--  active : 헨재 페이지 활성화 
-    <li class="page-item " aria-current="page">
-      <a class="page-link" href="#">2</a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    -->
-    
-    
-    
-    
+    <!--  href = "... " 링크로 이동 할 경우 검색어가 안됨 -->
+    <!--  검색어 유지 하기 위해 searcgForm을 전송하는 goPage 함수를 생성
+           링크를 함수호출로 변견 onCLick이벤트가 발생하면서 hoPage()함수 호출
+           함수의 파라메터 페이지번호를 넣어 주어야 함 -->
+    <%for(int i=pageDto.getStartNo(); i<=pageDto.getEndNo(); i++){%> <li class="page-item">
+    <a class="page-link <%= pageDto.getCri().getPageNo() == i ? "active" : "" %>"
+                           
+                           onclick="goPage(<%=i %>)"
+                           >
+                            <%=i %></a>
+</li>
+<%}%>
     <!--  뒤로가기 버튼 시작 -->
     <li class="page-item <%=pageDto.isNext() ? "" : "disabled"%>">
-      <a class="page-link" href="/boardList?pageNo=<%=pageDto.getCri().getEndNum()+1%>">Next</a>
+      <a class="page-link" onclick="goPage<%=pageDto.getEndNo()+1%>">Next</a>
     </li>
     <!--  뒤로가기 버튼 끝 -->
   </ul>
